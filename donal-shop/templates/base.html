@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Donald Shop - Votre boutique en ligne{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Donald Shop</div>
+            <div class="nav-links">
+                <a href="/">Accueil</a>
+                <a href="/produits/">Produits</a>
+                <a href="/panier/">Panier ({{ panier.nombre_articles }})</a>
+                <a href="#">Catégories</a>
+                <a href="#">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Donald Shop</h3>
+                <p>Votre boutique en ligne de confiance</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: contact@donaldshop.com</p>
+                <p>Téléphone: +225 XX XX XX XX</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Donald Shop. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+        <script>
+function ajouterAuPanier(produitId) {
+    console.log("🔍 DEBUT - Produit ID:", produitId);
+    console.log("🔍 URL:", `/panier/ajouter/${produitId}/`);
+    
+    // Vérifier le token CSRF
+    const csrfToken = getCookie('csrftoken');
+    console.log("🔍 CSRF Token:", csrfToken ? "✅ Présent" : "❌ Manquant");
+    
+    fetch(`/panier/ajouter/${produitId}/`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': csrfToken
+        }
+    })
+    .then(response => {
+        console.log("🔍 Statut HTTP:", response.status);
+        console.log("🔍 Headers:", response.headers);
+        return response.json();
+    })
+    .then(data => {
+        console.log("🔍 Données reçues:", data);
+        if(data.success) {
+            const panierLink = document.getElementById('panier-link');
+            if (panierLink) {
+                panierLink.textContent = `Panier (${data.nombre_articles})`;
+            }
+            alert('✅ Produit ajouté au panier !');
+        } else {
+            alert('❌ Erreur: ' + (data.message || 'Erreur inconnue'));
+        }
+    })
+    .catch(error => {
+        console.error('🔍 Erreur fetch:', error);
+        alert('❌ Erreur réseau: ' + error.message);
+    });
+    
+    console.log("🔍 FIN - Requête envoyée");
+}
+
+function getCookie(name) {
+    console.log("🍪 Recherche cookie:", name);
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                console.log("🍪 Cookie trouvé:", cookieValue ? "✅" : "❌");
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+</body>
+</html>

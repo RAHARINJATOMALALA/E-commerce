@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero">
+    <h1>Bienvenue sur Donald Shop !</h1>
+    <p>Votre boutique en ligne préférée</p>
+</section>
+
+<section class="search-section">
+    <h2>Entrez le nom du produit que vous recherchez</h2>
+    <div class="search-box">
+        <input type="text" class="search-input" placeholder="Rechercher un produit...">
+    </div>
+</section>
+
+<section class="featured-products">
+    <h2>Produits Populaires</h2>
+    <div class="products-grid">
+        <!-- Produit 1 - Sac 8080 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=300&fit=crop" alt="Sac 8080" class="product-img">
+                <span class="product-badge">Nouveau</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Sac 8080</h3>
+                <div class="product-category">Accessoires</div>
+                <div class="product-price">50 400.0 Ariary</div>
+                <div class="product-actions">
+                    <button class="btn btn-outline btn-small">Voir</button>
+                    <button onclick="ajouterAuPanier(1)" class="btn btn-primary btn-small">Acheter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Produit 2 - Médecin n01 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop" alt="Médecin n01" class="product-img">
+                <span class="product-badge">Professionnel</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Médecin </h3>
+                <div class="product-category">Médecine</div>
+                <div class="product-price">120 000.0 Ariary</div>
+                <div class="product-actions">
+                    <button class="btn btn-outline btn-small">Voir</button>
+                    <button onclick="ajouterAuPanier(2)" class="btn btn-primary btn-small">Acheter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Produit 3 - Volo -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop" alt="Volo" class="product-img">
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Casque</h3>
+                <div class="product-category">Électronique</div>
+                <div class="product-price">75 000.0 Ariary</div>
+                <div class="product-actions">
+                    <button class="btn btn-outline btn-small">Voir</button>
+                    <button onclick="ajouterAuPanier(3)" class="btn btn-primary btn-small">Acheter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Produit 4 - Volo 8080 -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&h=300&fit=crop" alt="Volo 8080" class="product-img">
+                <span class="product-badge">Promo</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">Appareil</h3>
+                <div class="product-category">Électronique</div>
+                <div class="product-price">90 300.0 Ariary</div>
+                <div class="product-actions">
+                    <button class="btn btn-outline btn-small">Voir</button>
+                    <button onclick="ajouterAuPanier(4)" class="btn btn-primary btn-small">Acheter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="pagination">
+    <a href="#" class="btn btn-primary">Suivant</a>
+</div>
+{% endblock %}

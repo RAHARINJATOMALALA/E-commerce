@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Panier - Donald Shop{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <h1>Votre Panier</h1>
+    
+    {% if articles %}
+    <div class="cart-items">
+        {% for article in articles %}
+        <div class="cart-item">
+            <div class="item-image">
+                {% if article.produit.image %}
+                <img src="{{ article.produit.image.url }}" alt="{{ article.produit.nom }}">
+                {% else %}
+                <div class="image-placeholder">{{ article.produit.nom }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="item-details">
+                <h3>{{ article.produit.nom }}</h3>
+                <p class="item-price">{{ article.produit.prix }} Ariary</p>
+            </div>
+            
+            <div class="item-quantity">
+                <form method="post" action="{% url 'modifier_quantite' article.id %}">
+                    {% csrf_token %}
+                    <label>Quantité:</label>
+                    <input type="number" name="quantite" value="{{ article.quantite }}" min="1" max="10">
+                    <button type="submit" class="btn btn-small">Mettre à jour</button>
+                </form>
+            </div>
+            
+            <div class="item-subtotal">
+                <strong>{{ article.sous_total }} Ariary</strong>
+            </div>
+            
+            <div class="item-actions">
+                <a href="{% url 'supprimer_article' article.id %}" class="btn btn-danger btn-small">Supprimer</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="cart-summary">
+        <div class="total">
+            <h3>Total: {{ panier.total }} Ariary</h3>
+        </div>
+        <div class="cart-actions">
+            <a href="{% url 'liste_produits' %}" class="btn btn-outline">Continuer les achats</a>
+            <a href="#" class="btn btn-primary">Passer la commande</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-cart">
+        <h2>Votre panier est vide</h2>
+        <p>Découvrez nos produits et ajoutez-les à votre panier !</p>
+        <a href="{% url 'liste_produits' %}" class="btn btn-primary">Voir les produits</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
